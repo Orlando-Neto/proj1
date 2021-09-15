@@ -2,7 +2,7 @@ import Head from 'next/head'
 
 export default function HeadHtml(props) {
 
-    let titulo = <title>Página simples</title>
+    let titulo = <title>Proj1</title>
 
     if(props.title) {
         titulo = <title>{props.title}</title>
