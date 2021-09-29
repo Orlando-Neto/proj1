@@ -1,0 +1,30 @@
+[
+    {
+        "id": 1,
+        "text": "Dashboard",
+        "icon": "fas fa-tachometer-alt",
+        "subTitulos": [
+            {
+                "id": 11,
+                "text": "Dashboard 1",
+                "link": "index1.html"
+            },
+            {
+                "id": 12,
+                "text": "Dashboard 2",
+                "link": "index2.html"
+            },
+            {
+                "id": 13,
+                "text": "Dashboard 3",
+                "link": "index3.html"
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "text": "Outra coisa ",
+        "icon": "fas fa-times",
+        "link": "outra_coisa.html"
+    }
+]
