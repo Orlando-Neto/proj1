@@ -52,19 +52,18 @@ export default function MenuLateral() {
                 }
             })
         }
-
-        return menu_list
+        
+        return menu_list;
     }
 
     return (
         <aside className="menu-sidebar d-none d-lg-block">
             <div className="logo">
-            <a href="#">
-                <img src="images/icon/logo.png" alt="Cool Admin" />
-            </a>
+                <a href="#">
+                    <img src="/images/icon/logo.png" alt="Cool Admin" />
+                </a>
             </div>
-            <div className="menu-sidebar__content js-scrollbar1">
-
+            <div className="menu-sidebar__content">
                 <nav className="navbar-sidebar">
                     <ul className="list-unstyled navbar__list">
                         {renderMenu()}
