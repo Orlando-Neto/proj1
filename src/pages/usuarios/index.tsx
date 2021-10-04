@@ -1,5 +1,5 @@
-import Head from '../../components/Head'
-import Corpo from '../../components/Corpo'
+import Head from '../../components/Layout/Head'
+import Corpo from '../../components/Layout/Corpo'
 import prisma from '../../lib/prisma'
 import { useState } from 'react'
 
@@ -20,30 +20,59 @@ export const getServerSideProps = async ({ req }) => {
   return { props: { data: users } }
 }
 
-
 // Display list of users (in /pages/index.tsx)
 export default function Usuarios({data}) {
 
   const [users, setUsers] = useState(data)
+  const [user, setUser] = useState<iUser>({name: "", email: "", job: ""})
 
   const salvar = async (user, e) => {
     e.preventDefault()
-  
-    const response = await fetch('/api/users', {
-      method: "POST",
-      body: JSON.stringify(user)
-    })
+    let response
+
+    if(user.id == undefined) {
+
+      response = await fetch('/api/users', {
+        method: "POST",
+        body: JSON.stringify(user)
+      })
+    } else {
+      response = await fetch('/api/users/'+user.id, {
+        method: 'PUT',
+        body: JSON.stringify(user)
+      })
+    }
   
     if(!response.ok) {
       throw new Error(response.statusText)
     }
 
-    setUsers([...users, user])
+    if(user.id == undefined) {
+      let novoUser = await response.json()
+      setUsers([...users, novoUser])
+    } else {
+      let novoUsers = users.map(u => {
+        return (u.id === user.id) ? user : u
+      })
+      
+      setUsers(novoUsers)
+    }
+
+    e.target.reset()
+    setUser({name: '', job: '', email: ''})
 
     return await response.json()
   }
 
-  let user: iUser = {name: '', job: "", email: ''};
+  function editar(id) {
+
+    let data = users.map((user) => user)
+      .filter((user) => (user.id === id))
+    
+    if(data.length > 0) {
+      setUser(data[0])
+    }
+  }
 
   return (
     <>
@@ -55,12 +84,11 @@ export default function Usuarios({data}) {
 
         <div className="card">
           <div className="card-header">
-            <strong>Horizontal</strong> Form
+            Cadastro Usuário
           </div>
           <form onSubmit={async (e) => {
               try { 
                   await salvar(user, e);
-                  e.target.reset()
               } catch(err) {
                   console.log(err)
               }
@@ -73,7 +101,7 @@ export default function Usuarios({data}) {
                     <label htmlFor="nome" className=" form-control-label">Nome:</label>
                   </div>
                   <div className="col-12 col-md-9">
-                    <input type="text" id="nome" required name="nome" onChange={e => user.name = e.target.value} placeholder="Digite seu nome" className="form-control" />
+                    <input type="text" id="nome" required name="nome" onChange={e => setUser({...user, name: e.target.value})} value={user.name} placeholder="Digite seu nome" className="form-control" />
                   </div>
                 </div>
 
@@ -82,7 +110,7 @@ export default function Usuarios({data}) {
                     <label htmlFor="email" className=" form-control-label">Email:</label>
                   </div>
                   <div className="col-12 col-md-9">
-                    <input type="email" id="email" required name="email" onChange={e => user.email = e.target.value} placeholder="Digite seu Email" className="form-control" />
+                    <input type="email" id="email" required name="email" onChange={e => setUser({...user, email: e.target.value})} value={user.email} placeholder="Digite seu Email" className="form-control" />
                   </div>
                 </div>
 
@@ -91,7 +119,7 @@ export default function Usuarios({data}) {
                     <label htmlFor="cargo" className=" form-control-label">Cargo:</label>
                   </div>
                   <div className="col-12 col-md-9">
-                    <input type="text" id="cargo" name="cargo" onChange={e => user.job = e.target.value} placeholder="Digite seu Cargo" className="form-control" />
+                    <input type="text" id="cargo" name="cargo" onChange={e => setUser({...user, job: e.target.value})} value={user.job} placeholder="Digite seu Cargo" className="form-control" />
                   </div>
                 </div>
 
@@ -101,7 +129,7 @@ export default function Usuarios({data}) {
                 <i className="fa fa-dot-circle-o"></i> Confirmar
               </button>
               &nbsp;
-              <button type="reset" className="btn btn-danger btn-sm">
+              <button type="button" onClick={(() => {setUser({name: '', job: '', email: ''})})} className="btn btn-danger btn-sm">
                 <i className="fa fa-ban"></i> Resetar
               </button>
             </div>
@@ -112,15 +140,17 @@ export default function Usuarios({data}) {
             <table className="table table-borderless table-striped table-earning">
                 <thead>
                     <tr>
-                        <th>Nome</th>
-                        <th>Email</th>
-                        <th>Cargo</th>
+                      <th>ID</th>
+                      <th>Nome</th>
+                      <th>Email</th>
+                      <th>Cargo</th>
                     </tr>
                 </thead>
                 <tbody>
                   {
-                    users.map(user => (
-                      <tr key={user.id}>
+                    users.map((user, i) => (
+                      <tr key={user.id} onClick={() => editar(user.id)}>
+                        <td>{user.id}</td>
                         <td>{user.name}</td>
                         <td>{user.email}</td>
                         <td>{user.job}</td>

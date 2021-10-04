@@ -1,4 +1,4 @@
-import Menu from '../../public/menu.json'
+import Menu from '../../../public/menu.json'
 
 interface iMenu {
     id: number,
