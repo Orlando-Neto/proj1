@@ -59,7 +59,7 @@ export default function MenuLateral() {
     return (
         <aside className="menu-sidebar d-none d-lg-block">
             <div className="logo">
-                <a href="#">
+                <a href="/">
                     <img src="/images/icon/logo.png" alt="Cool Admin" />
                 </a>
             </div>

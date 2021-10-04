@@ -8,11 +8,14 @@ export default function Scripts() {
             <script src="/vendor/bootstrap-4.1/bootstrap.min.js"></script>
             
             <script src="/vendor/slick/slick.min.js"></script>
+            
             <script src="/vendor/wow/wow.min.js"></script>
             <script src="/vendor/animsition/animsition.min.js"></script>
             <script src="/vendor/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+
             <script src="/vendor/counter-up/jquery.waypoints.min.js"></script>
             <script src="/vendor/counter-up/jquery.counterup.min.js"></script>
+
             <script src="/vendor/circle-progress/circle-progress.min.js"></script>
             <script src="/vendor/perfect-scrollbar/perfect-scrollbar.js"></script>
             <script src="/vendor/chartjs/Chart.bundle.min.js"></script>
