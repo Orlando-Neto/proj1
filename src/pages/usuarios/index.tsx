@@ -2,6 +2,7 @@ import Head from '../../components/Layout/Head'
 import Corpo from '../../components/Layout/Corpo'
 import prisma from '../../lib/prisma'
 import { useState } from 'react'
+import Input from '../../components/Input'
 
 interface iUser {
   id?: number,
@@ -12,7 +13,11 @@ interface iUser {
 
 export const getServerSideProps = async ({ req }) => {
 
-  const data = await prisma.user.findMany()
+  const data = await prisma.user.findMany({
+    orderBy: {
+      id: 'asc'
+    }
+  })
 
   let users = JSON.stringify(data);
   users = JSON.parse(users)
@@ -44,6 +49,7 @@ export default function Usuarios({data}) {
     }
   
     if(!response.ok) {
+      let ret = await response.json()
       throw new Error(response.statusText)
     }
 
@@ -64,14 +70,8 @@ export default function Usuarios({data}) {
     return await response.json()
   }
 
-  function editar(id) {
-
-    let data = users.map((user) => user)
-      .filter((user) => (user.id === id))
-    
-    if(data.length > 0) {
-      setUser(data[0])
-    }
+  function editar(user) {
+    setUser(user)
   }
 
   return (
@@ -90,46 +90,50 @@ export default function Usuarios({data}) {
               try { 
                   await salvar(user, e);
               } catch(err) {
-                  console.log(err)
+                
               }
             }} method="post" className="form-horizontal">
             
             <div className="card-body card-block">
 
-                <div className="row form-group">
-                  <div className="col col-md-3">
-                    <label htmlFor="nome" className=" form-control-label">Nome:</label>
-                  </div>
-                  <div className="col-12 col-md-9">
-                    <input type="text" id="nome" required name="nome" onChange={e => setUser({...user, name: e.target.value})} value={user.name} placeholder="Digite seu nome" className="form-control" />
-                  </div>
-                </div>
-
-                <div className="row form-group">
-                  <div className="col col-md-3">
-                    <label htmlFor="email" className=" form-control-label">Email:</label>
-                  </div>
-                  <div className="col-12 col-md-9">
-                    <input type="email" id="email" required name="email" onChange={e => setUser({...user, email: e.target.value})} value={user.email} placeholder="Digite seu Email" className="form-control" />
-                  </div>
-                </div>
-
-                <div className="row form-group">
-                  <div className="col col-md-3">
-                    <label htmlFor="cargo" className=" form-control-label">Cargo:</label>
-                  </div>
-                  <div className="col-12 col-md-9">
-                    <input type="text" id="cargo" name="cargo" onChange={e => setUser({...user, job: e.target.value})} value={user.job} placeholder="Digite seu Cargo" className="form-control" />
-                  </div>
-                </div>
-
+                <Input 
+                  type="text"
+                  label="Nome"
+                  id="name"
+                  name="name"
+                  required
+                  value={user.name}
+                  onchange={e => setUser({...user, name: e.target.value})}
+                  placeholder="Digite seu nome"
+                />
+                
+                <Input 
+                  type="email"
+                  label="Email"
+                  id="email"
+                  name="email"
+                  value={user.email}
+                  onchange={e => setUser({...user, email: e.target.value})}
+                  placeholder="Digite seu email"
+                />
+                
+                <Input 
+                  type="text"
+                  label="Cargo"
+                  id="cargo"
+                  name="cargo"
+                  value={user.job}
+                  onchange={e => setUser({...user, job: e.target.value})}
+                  placeholder="Digite seu cargo"
+                />
+                
             </div>
             <div className="card-footer">
               <button type="submit" className="btn btn-primary btn-sm">
                 <i className="fa fa-dot-circle-o"></i> Confirmar
               </button>
               &nbsp;
-              <button type="button" onClick={(() => {setUser({name: '', job: '', email: ''})})} className="btn btn-danger btn-sm">
+              <button type="button" onClick={() => setUser({name: '', job: '', email: ''})} className="btn btn-danger btn-sm">
                 <i className="fa fa-ban"></i> Resetar
               </button>
             </div>
@@ -149,7 +153,7 @@ export default function Usuarios({data}) {
                 <tbody>
                   {
                     users.map((user, i) => (
-                      <tr key={user.id} onClick={() => editar(user.id)}>
+                      <tr key={user.id} onClick={() => editar(user)}>
                         <td>{user.id}</td>
                         <td>{user.name}</td>
                         <td>{user.email}</td>
