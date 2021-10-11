@@ -8,6 +8,7 @@ interface iUser {
   id?: number,
   name: string,
   email: string,
+  senha: string,
   job: string
 }
 
@@ -26,10 +27,10 @@ export const getServerSideProps = async ({ req }) => {
 }
 
 // Display list of users (in /pages/index.tsx)
-export default function Usuarios({data}) {
+export default function UsuariosPage({data}) {
 
   const [users, setUsers] = useState(data)
-  const [user, setUser] = useState<iUser>({name: "", email: "", job: ""})
+  const [user, setUser] = useState<iUser>({name: "", senha: '', email: "", job: ""})
 
   const salvar = async (user, e) => {
     e.preventDefault()
@@ -50,6 +51,7 @@ export default function Usuarios({data}) {
   
     if(!response.ok) {
       let ret = await response.json()
+
       throw new Error(response.statusText)
     }
 
@@ -65,7 +67,7 @@ export default function Usuarios({data}) {
     }
 
     e.target.reset()
-    setUser({name: '', job: '', email: ''})
+    setUser({name: '', job: '', senha: '', email: ''})
 
     return await response.json()
   }
@@ -133,11 +135,11 @@ export default function Usuarios({data}) {
                 <i className="fa fa-dot-circle-o"></i> Confirmar
               </button>
               &nbsp;
-              <button type="button" onClick={() => setUser({name: '', job: '', email: ''})} className="btn btn-danger btn-sm">
+              <button type="reset" onClick={() => setUser({name: '', senha: '', job: '', email: ''})} className="btn btn-danger btn-sm">
                 <i className="fa fa-ban"></i> Resetar
               </button>
             </div>
-            </form>
+          </form>
         </div>
 
         <div className="table-responsive table--no-card m-b-30">
