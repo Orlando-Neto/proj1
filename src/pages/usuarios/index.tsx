@@ -3,13 +3,7 @@ import Corpo from '../../components/Layout/Corpo'
 import prisma from '../../lib/prisma'
 import { useState } from 'react'
 import Input from '../../components/Input'
-
-interface iUser {
-  id?: number,
-  name: string,
-  email: string,
-  job: string
-}
+import Usuario from '../../model/Usuario'
 
 export const getServerSideProps = async ({ req }) => {
 
@@ -29,7 +23,7 @@ export const getServerSideProps = async ({ req }) => {
 export default function Usuarios({data}) {
 
   const [users, setUsers] = useState(data)
-  const [user, setUser] = useState<iUser>({name: "", email: "", job: ""})
+  const [user, setUser] = useState<Usuario>({nome: "", email: ""})
 
   const salvar = async (user, e) => {
     e.preventDefault()
@@ -65,7 +59,7 @@ export default function Usuarios({data}) {
     }
 
     e.target.reset()
-    setUser({name: '', job: '', email: ''})
+    setUser({nome: '', email: ''})
 
     return await response.json()
   }
@@ -102,8 +96,8 @@ export default function Usuarios({data}) {
                   id="name"
                   name="name"
                   required
-                  value={user.name}
-                  onchange={e => setUser({...user, name: e.target.value})}
+                  value={user.nome}
+                  onchange={e => setUser({...user, nome: e.target.value})}
                   placeholder="Digite seu nome"
                 />
                 
@@ -118,12 +112,12 @@ export default function Usuarios({data}) {
                 />
                 
                 <Input 
-                  type="text"
-                  label="Cargo"
-                  id="cargo"
-                  name="cargo"
-                  value={user.job}
-                  onchange={e => setUser({...user, job: e.target.value})}
+                  type="password"
+                  label="Senha"
+                  id="senha"
+                  name="senha"
+                  value={user.senha}
+                  onchange={e => setUser({...user, senha: e.target.value})}
                   placeholder="Digite seu cargo"
                 />
                 
