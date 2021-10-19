@@ -3,14 +3,7 @@ import Corpo from '../../components/Layout/Corpo'
 import prisma from '../../lib/prisma'
 import { useState } from 'react'
 import Input from '../../components/Input'
-
-interface iUser {
-  id?: number,
-  name: string,
-  email: string,
-  senha: string,
-  job: string
-}
+import Usuario from '../../model/Usuario'
 
 export const getServerSideProps = async ({ req }) => {
 
@@ -30,7 +23,7 @@ export const getServerSideProps = async ({ req }) => {
 export default function UsuariosPage({data}) {
 
   const [users, setUsers] = useState(data)
-  const [user, setUser] = useState<iUser>({name: "", senha: '', email: "", job: ""})
+  const [user, setUser] = useState<Usuario>({nome: "", email: ""})
 
   const salvar = async (user, e) => {
     e.preventDefault()
@@ -67,7 +60,7 @@ export default function UsuariosPage({data}) {
     }
 
     e.target.reset()
-    setUser({name: '', job: '', senha: '', email: ''})
+    setUser({nome: '', email: ''})
 
     return await response.json()
   }
@@ -104,8 +97,8 @@ export default function UsuariosPage({data}) {
                   id="name"
                   name="name"
                   required
-                  value={user.name}
-                  onchange={e => setUser({...user, name: e.target.value})}
+                  value={user.nome}
+                  onchange={e => setUser({...user, nome: e.target.value})}
                   placeholder="Digite seu nome"
                 />
                 
@@ -120,12 +113,12 @@ export default function UsuariosPage({data}) {
                 />
                 
                 <Input 
-                  type="text"
-                  label="Cargo"
-                  id="cargo"
-                  name="cargo"
-                  value={user.job}
-                  onchange={e => setUser({...user, job: e.target.value})}
+                  type="password"
+                  label="Senha"
+                  id="senha"
+                  name="senha"
+                  value={user.senha}
+                  onchange={e => setUser({...user, senha: e.target.value})}
                   placeholder="Digite seu cargo"
                 />
                 
@@ -135,7 +128,7 @@ export default function UsuariosPage({data}) {
                 <i className="fa fa-dot-circle-o"></i> Confirmar
               </button>
               &nbsp;
-              <button type="reset" onClick={() => setUser({name: '', senha: '', job: '', email: ''})} className="btn btn-danger btn-sm">
+              <button type="reset" onClick={() => setUser({nome: '', senha: '', email: ''})} className="btn btn-danger btn-sm">
                 <i className="fa fa-ban"></i> Resetar
               </button>
             </div>

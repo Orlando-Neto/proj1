@@ -1,4 +1,9 @@
+import useAuth from "../../data/hook/useAuthData"
+import Link from 'next/link'
+
 export default function MenuSuperior() {
+
+    const { user, logout } = useAuth()
 
     return (
         <header className="header-desktop">
@@ -131,7 +136,7 @@ export default function MenuSuperior() {
                                         <img src="images/icon/avatar-01.jpg" alt="John Doe" />
                                     </div>
                                     <div className="content">
-                                        <a className="js-acc-btn" href="#">john doe</a>
+                                        <a className="js-acc-btn" href="#">{user?.nome}</a>
                                     </div>
                                     <div className="account-dropdown js-dropdown">
                                         <div className="info clearfix">
@@ -142,9 +147,9 @@ export default function MenuSuperior() {
                                             </div>
                                             <div className="content">
                                                 <h5 className="name">
-                                                <a href="#">john doe</a>
+                                                <a href="#">{user?.nome}</a>
                                                 </h5>
-                                                <span className="email">johndoe@example.com</span>
+                                                <span className="email">{user?.email}</span>
                                             </div>
                                         </div>
                                         <div className="account-dropdown__body">
@@ -161,9 +166,8 @@ export default function MenuSuperior() {
                                                 <i className="zmdi zmdi-money-box"></i>Billing</a>
                                             </div>
                                         </div>
-                                        <div className="account-dropdown__footer">
-                                            <a href="#">
-                                                <i className="zmdi zmdi-power"></i>Logout</a>
+                                        <div className="account-dropdown__footer" onClick={logout}>
+                                                <i className="zmdi zmdi-power"></i>Logout
                                         </div>
                                     </div>
                                 </div>
