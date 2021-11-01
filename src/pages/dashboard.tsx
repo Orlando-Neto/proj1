@@ -3,9 +3,10 @@ import Corpo from '../components/Layout/Corpo'
 import useAuth from '../data/hook/useAuthData'
 
 // Display list of users (in /pages/index.tsx)
-export default function Usuarios() {
-    
-    const { login, logout } = useAuth()
+export default function DashBoardPage() {
+
+    const { logout } = useAuth()
+
 
     return (
         <>

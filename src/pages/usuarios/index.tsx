@@ -20,7 +20,7 @@ export const getServerSideProps = async ({ req }) => {
 }
 
 // Display list of users (in /pages/index.tsx)
-export default function Usuarios({data}) {
+export default function UsuariosPage({data}) {
 
   const [users, setUsers] = useState(data)
   const [user, setUser] = useState<Usuario>({nome: "", email: ""})
@@ -44,6 +44,7 @@ export default function Usuarios({data}) {
   
     if(!response.ok) {
       let ret = await response.json()
+
       throw new Error(response.statusText)
     }
 
@@ -127,11 +128,11 @@ export default function Usuarios({data}) {
                 <i className="fa fa-dot-circle-o"></i> Confirmar
               </button>
               &nbsp;
-              <button type="button" onClick={() => setUser({name: '', job: '', email: ''})} className="btn btn-danger btn-sm">
+              <button type="reset" onClick={() => setUser({nome: '', senha: '', email: ''})} className="btn btn-danger btn-sm">
                 <i className="fa fa-ban"></i> Resetar
               </button>
             </div>
-            </form>
+          </form>
         </div>
 
         <div className="table-responsive table--no-card m-b-30">
