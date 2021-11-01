@@ -47,7 +47,7 @@ export function AuthProvider(props) {
                 email: user.email,
                 id: user.id
             }))
-            router.push('/')
+            router.push('/dashboard')
         } else {
             gerenciarCookie(false)
             router.push('/login')
@@ -66,7 +66,7 @@ export function AuthProvider(props) {
         if(Cookies.get('cool-admin')) {
             const user = JSON.parse(localStorage.getItem('usuario'))
             setUser(user)
-            router.push('/')
+            // router.push('/dashboard')
         } else {
             router.push('/login')
         }
