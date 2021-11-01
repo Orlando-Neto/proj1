@@ -1,4 +1,5 @@
 import Menu from '../../../public/menu.json'
+import Link from 'next/link'
 
 interface iMenu {
     id: number,
@@ -45,10 +46,12 @@ export default function MenuLateral() {
                 } else {
 
                     menu_list.push(<li key={v.id}>
-                        <a href={v.link}>
+                        <Link href={v.link}>
+                            <a>
                             {(<i className={v.icon}></i>) ?? null}
                             {v.text}
-                        </a></li>)
+                            </a>
+                        </Link></li>)
                 }
             })
         }

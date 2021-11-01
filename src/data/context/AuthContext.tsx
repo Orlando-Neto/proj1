@@ -1,7 +1,7 @@
 import { createContext, useEffect, useState } from "react"
 import Usuario from "../../model/Usuario"
 import Cookies from 'js-cookie'
-import router from "next/router"
+import { useRouter } from "next/dist/client/router"
 
 interface AuthContextProps {
     user?: Usuario,
@@ -13,22 +13,24 @@ const AuthContext = createContext<AuthContextProps>({})
 
 export default AuthContext
 
-function gerenciarCookie(logado: boolean) {
-    if(logado) {
-        Cookies.set('cool-admin', logado, {
-            expires: 1
-        })
-        
-    } else {
-        Cookies.remove('cool-admin')
-        router.push('/login')
-    }
-}
-
 export function AuthProvider(props) {
     
+    const router = useRouter()
+
     const [user, setUser] = useState(null)
     
+    function gerenciarCookie(logado: boolean) {
+        if(logado) {
+            Cookies.set('cool-admin', logado, {
+                expires: 1
+            })
+            
+        } else {
+            Cookies.remove('cool-admin')
+            router.push('/login')
+        }
+    }
+
     async function login(e, form) {
 
         e.preventDefault()
@@ -66,7 +68,7 @@ export function AuthProvider(props) {
         if(Cookies.get('cool-admin')) {
             const user = JSON.parse(localStorage.getItem('usuario'))
             setUser(user)
-            router.push('/')
+            
         } else {
             router.push('/login')
         }

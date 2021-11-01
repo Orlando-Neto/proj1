@@ -5,7 +5,8 @@ export default function LoginPage() {
 
     return (
         <>
-            <Head><title>Login</title></Head>
+            <Head />
+            
             <Login />
         </>
     )

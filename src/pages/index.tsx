@@ -12,7 +12,7 @@ export default function Usuarios() {
             <Head />
 
             <Corpo>
-                <button onClick={logout}>Logout</button>
+                
             </Corpo>
         </>
     )
