@@ -8,7 +8,7 @@ export default function Login() {
     const [ form, setForm ] = useState({})
 
     return (
-        <div className="animsition">
+        <div className="">
             <div className="page-wrapper">
                 <div className="page-content--bge5">
                     <div className="container">

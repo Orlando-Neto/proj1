@@ -14,6 +14,9 @@ export default function DashBoardPage() {
 
             <Corpo>
                 
+                <button type="button" onClick={logout} >
+                    <i className="zmdi zmdi-power"></i>Logout
+                </button>
             </Corpo>
         </>
     )

@@ -1,3 +1,5 @@
+import Script from 'next/script'
+
 export default function Scripts() {
 
     return (
@@ -21,7 +23,7 @@ export default function Scripts() {
             <script src="/vendor/chartjs/Chart.bundle.min.js"></script>
             <script src="/vendor/select2/select2.min.js"></script>
 
-            <script src="/js/main.js"></script>
+            <Script src="/js/main.js"></Script>
         </>
     )
 }

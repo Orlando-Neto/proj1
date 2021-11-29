@@ -23,7 +23,7 @@ export const getServerSideProps = async ({ req }) => {
 export default function UsuariosPage({data}) {
 
   const [users, setUsers] = useState(data)
-  const [user, setUser] = useState<Usuario>({nome: "", email: ""})
+  const [user, setUser] = useState<Usuario>({nome: "", email: "", senha: ''})
 
   const salvar = async (user, e) => {
     e.preventDefault()

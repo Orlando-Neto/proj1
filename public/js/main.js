@@ -1,5 +1,5 @@
 
-(function ($) {
+/*(function ($) {
   // USE STRICT
   "use strict";
 
@@ -1248,9 +1248,7 @@
     console.log(error);
   }
 
-})(jQuery);
-
-
+})(jQuery);*/
 
 (function ($) {
     // USE STRICT
@@ -1515,6 +1513,7 @@
 
 
 })(jQuery);
+
 (function ($) {
   // USE STRICT
   "use strict";
@@ -1614,6 +1613,7 @@
     console.log(error);
   }
 })(jQuery);
+
 (function ($) {
   // USE STRICT
   "use strict";

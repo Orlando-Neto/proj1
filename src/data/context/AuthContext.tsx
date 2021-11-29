@@ -68,7 +68,6 @@ export function AuthProvider(props) {
         if(Cookies.get('cool-admin')) {
             const user = JSON.parse(localStorage.getItem('usuario'))
             setUser(user)
-            // router.push('/dashboard')
         } else {
             router.push('/login')
         }

@@ -167,11 +167,11 @@ export default function MenuSuperior() {
                                             </div>
                                         </div>
                                         <div className="account-dropdown__footer">
-                                            <Link href="#" passHref>
-                                                <a onClick={logout} >
+                                            <button type="button" >
+                                                <a href="#">
                                                     <i className="zmdi zmdi-power"></i>Logout
                                                 </a>
-                                            </Link>
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
