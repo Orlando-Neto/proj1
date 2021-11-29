@@ -17,6 +17,6 @@ export default async function handler(req, res) {
     if(user) {
         return res.status(200).json(user)
     } else {
-        return res.status(404).json('não foi mané')
+        return res.status(404).json({error: "Não foi mané"})
     }
 }

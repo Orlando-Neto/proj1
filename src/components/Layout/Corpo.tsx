@@ -6,14 +6,16 @@ import Scripts from "./Scripts";
 export default function Corpo(props: any) {
 
     return (
-        <div className="animsition">
+        <div className="">
             <div className="page-wrapper">
             
                 <MenuMobile />
                 
                 <MenuLateral />
                 
-                <Conteudo titulo={props?.titulo}>{props?.children}</Conteudo>
+                <Conteudo titulo={props?.titulo}>
+                    {props?.children}
+                </Conteudo>
             </div>
 
             <Scripts />

@@ -23,7 +23,7 @@ export const getServerSideProps = async ({ req }) => {
 export default function UsuariosPage({data}) {
 
   const [users, setUsers] = useState(data)
-  const [user, setUser] = useState<Usuario>({nome: "", email: ""})
+  const [user, setUser] = useState<Usuario>({nome: "", email: "", senha: ''})
 
   const salvar = async (user, e) => {
     e.preventDefault()
@@ -60,7 +60,7 @@ export default function UsuariosPage({data}) {
     }
 
     e.target.reset()
-    setUser({nome: '', email: ''})
+    setUser({nome: '', email: '', senha: ""})
 
     return await response.json()
   }
@@ -119,7 +119,7 @@ export default function UsuariosPage({data}) {
                   name="senha"
                   value={user.senha}
                   onchange={e => setUser({...user, senha: e.target.value})}
-                  placeholder="Digite seu cargo"
+                  placeholder="Digite sua Senha"
                 />
                 
             </div>

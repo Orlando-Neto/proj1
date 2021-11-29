@@ -4,11 +4,11 @@ import { AuthProvider } from '../data/context/AuthContext'
 
 function MyApp({ Component, pageProps }) {
   return (
-    <AuthProvider>
-      <AppProvider>
-        <Component {...pageProps} />
-      </AppProvider>
-    </AuthProvider>
+    <AppProvider>
+      <AuthProvider>
+          <Component {...pageProps} />
+      </AuthProvider>
+    </AppProvider>
   )
 }
 
