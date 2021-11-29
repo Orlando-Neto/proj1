@@ -13,7 +13,9 @@ export default function Corpo(props: any) {
                 
                 <MenuLateral />
                 
-                <Conteudo titulo={props?.titulo}>{props?.children}</Conteudo>
+                <Conteudo titulo={props?.titulo}>
+                    {props?.children}
+                </Conteudo>
             </div>
 
             <Scripts />

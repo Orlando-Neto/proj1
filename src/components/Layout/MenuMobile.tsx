@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import Menu from '../../../public/menu.json'
 
 interface iMenu {
@@ -9,6 +10,8 @@ interface iMenu {
 }
 
 export default function MenuMobile() {
+
+    const [ isActive, setActive] = useState('');
 
     function renderMenu() {
 
@@ -64,7 +67,7 @@ export default function MenuMobile() {
                         <a className="logo" href="index.html">
                             <img src="images/icon/logo.png" alt="CoolAdmin" />
                         </a>
-                        <button className="hamburger hamburger--slider" type="button">
+                        <button onClick={() => (isActive)?setActive(''):setActive('is-active')} className={`hamburger hamburger--slider` + isActive} type="button">
                             <span className="hamburger-box">
                                 <span className="hamburger-inner"></span>
                             </span>

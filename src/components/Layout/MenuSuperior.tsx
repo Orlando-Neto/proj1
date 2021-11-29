@@ -1,9 +1,10 @@
 import useAuth from "../../data/hook/useAuthData"
-import Link from 'next/link'
+import { useState } from "react";
 
 export default function MenuSuperior() {
 
     const { user, logout } = useAuth()
+    const [ show_dropdown, setSD] = useState('');
 
     return (
         <header className="header-desktop">
@@ -131,12 +132,17 @@ export default function MenuSuperior() {
                                 </div>
                             </div>
                             <div className="account-wrap">
-                                <div className="account-item clearfix js-item-menu">
-                                    <div className="image">
+                                <div id="dropaccount" className={`account-item clearfix js-item-menu `+show_dropdown}>
+                                    
+                                    <div onClick={(e) => {
+                                        (show_dropdown)?setSD(''):setSD('show-dropdown')
+                                    }} className="image">
                                         <img src="images/icon/avatar-01.jpg" alt="John Doe" />
                                     </div>
-                                    <div className="content">
-                                        <a className="js-acc-btn" href="#">{user?.nome}</a>
+                                    <div onClick={(e) => {
+                                        (show_dropdown)?setSD(''):setSD('show-dropdown')
+                                    }} className="content">
+                                        <a className="js-acc-btn">{user?.nome}</a>
                                     </div>
                                     <div className="account-dropdown js-dropdown">
                                         <div className="info clearfix">
@@ -167,11 +173,9 @@ export default function MenuSuperior() {
                                             </div>
                                         </div>
                                         <div className="account-dropdown__footer">
-                                            <button type="button" >
-                                                <a href="#">
-                                                    <i className="zmdi zmdi-power"></i>Logout
-                                                </a>
-                                            </button>
+                                            <a onClick={logout} href="#" >
+                                                <i className="zmdi zmdi-power"></i>Logout
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
