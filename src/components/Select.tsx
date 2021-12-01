@@ -5,8 +5,8 @@ export default function Select(props) {
     let required    = props?.required
     let name        = props?.name
     let value       = props?.value
-
-    const options     = (props.items)??['Não há opção']
+    let onchange    = props?.onchange
+    let options     = (props.items)??['Não há opção']
 
     function renderOptions() {
 
@@ -38,7 +38,7 @@ export default function Select(props) {
                 <label htmlFor={id} className="form-control-label">{label}</label>
             </div>
             <div className="col-12 col-md-9">
-                <select name={name} id={id} {...(required)?'required':''} className="form-control">
+                <select name={name} id={id} required={(required)??false} onChange={onchange} className="form-control">
                     {renderOptions()}
                 </select>
             </div>

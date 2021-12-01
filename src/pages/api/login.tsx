@@ -7,6 +7,14 @@ export default async function handler(req, res) {
     let email = body.email
     let senha = body.senha
 
+    if(!email) {
+        return res.status(402).json({error: "Email e/ou senha inválidos"})
+    }
+
+    if(!senha) {
+        return res.status(402).json({error: "Email e/ou senha inválidos"})
+    }
+
     const user = await prisma.user.findFirst({
         where: {
             email,

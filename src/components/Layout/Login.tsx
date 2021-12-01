@@ -1,14 +1,15 @@
 import { useState } from "react";
-import useAppData from "../../data/hook/useAppData";
 import useAuth from "../../data/hook/useAuthData";
 import Scripts from "./Scripts";
+import Link from 'next/link'
+import InputLogin from "../InputLogin";
+import Button from '../Botao'
+import Alerta from "../Alerta";
 
 export default function Login() {
     
     const { login } = useAuth()
-    const [ form, setForm ] = useState({})
-
-    const { errors } = useAppData()
+    const [ form, setForm ] = useState({email: '', senha: ''})
 
     return (
         <div className="">
@@ -22,24 +23,36 @@ export default function Login() {
                                         <img src="images/icon/logo.png" alt="CoolAdmin" />
                                     </a>
                                 </div>
-                                {(errors != '') ? (
-                                    <div className="alert alert-danger" role="alert">
-                                        {errors}
-                                    </div>
-                                ):''}
+                                <Alerta id='login' />
                                 <div className="login-form">
                                     <form onSubmit={(e) => login(e, form)} method="post">
-                                        <div className="form-group">
-                                            <label>Email Address</label>
-                                            <input className="au-input au-input--full" onChange={(e) => setForm({...form, email: e.target.value})} type="email" name="email" placeholder="Email" />
-                                        </div>
-                                        <div className="form-group">
-                                            <label>Password</label>
-                                            <input className="au-input au-input--full" onChange={(e) => setForm({...form, senha: e.target.value})} type="password" name="password" placeholder="Password" />
-                                        </div>
-                                        <button className="au-btn au-btn--block au-btn--green m-b-20" type="submit">sign in</button>
+                                        <InputLogin 
+                                            label="Email"
+                                            name="email"
+                                            type="email"
+                                            placeholder="Digite seu email"
+                                            onchange={(e) => setForm({...form, email: e.target.value})}
+                                        />
+                                        
+                                        <InputLogin 
+                                            label="Senha"
+                                            name="senha"
+                                            type="password"
+                                            placeholder="Digite sua senha"
+                                            onchange={(e) => setForm({...form, senha: e.target.value})}
+                                        />
+                                        
+                                        <Button 
+                                            className="au-btn au-btn--block au-btn--green m-b-20"
+                                            type="submit"
+                                        >Logar</Button>
                                         
                                     </form>
+                                    <div className="register-link">
+                                        <p>
+                                            Não tem uma conta? <Link href="/register">Cadastre-se</Link>
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
                         </div>

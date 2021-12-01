@@ -3,25 +3,48 @@ import { buscarErro } from "../../../lib/erros_banco";
 
 export default async function handler(req, res) {
 
-    if(req.method !== 'PUT') {
+    if(req.method !== 'PUT' && req.method !== 'DELETE') {
         return res.status(405).json({message: 'Method not allowed'})
     }
 
-    if(+req.query.id > 0) {
-        const userData = JSON.parse(req.body)
-        
-        let status = 200
-        const updatedUser = await prisma.user.update({
-            where: {
-                id: +req.query.id,
-            },
-            data: userData,
-        }).catch((e) => {
-            status = 422
-            let mensagem = buscarErro(e.code, (e.meta.target.length == 1)?e.meta.target[0]:null)
-            return {'mensagem': mensagem, 'campos': e.meta.target}
-        })
+    if(req.method === 'PUT') {
 
-        res.status(status).json(updatedUser)
+        if(+req.query.id > 0) {
+            const userData = JSON.parse(req.body)
+            
+            let status = 200
+            const updatedUser = await prisma.user.update({
+                where: {
+                    id: +req.query.id,
+                },
+                data: userData,
+            }).catch((e) => {
+                status = 422
+                let mensagem = buscarErro(e.code, (e.meta.target.length == 1)?e.meta.target[0]:null)
+                return {'mensagem': mensagem, 'campos': e.meta.target}
+            })
+    
+            res.status(status).json(updatedUser)
+        }
     }
+
+    if(req.method === 'DELETE') {
+        
+        if(+req.query.id > 0) {
+            
+            let status = 200
+            const deleteUser = await prisma.user.delete({
+                where: {
+                    id: +req.query.id,
+                }
+            }).catch((e) => {
+                status = 422
+                let mensagem = buscarErro(e.code, (e.meta.target.length == 1)?e.meta.target[0]:null)
+                return {'mensagem': mensagem, 'campos': e.meta.target}
+            })
+
+            res.status(status).json(deleteUser)
+        }
+    }
+
 }

@@ -1,28 +1,35 @@
 import { createContext, useEffect, useState } from "react";
 
 interface AppContextProps {
-    errors?: string,
-    salvarError?: (msg: object) => void
+    avisos?: {campo: {}},
+    salvarAviso?: (msg: any, className: string, id: string) => void
 }
 
 export function AppProvider(props) {
 
-    const [errors, setErrors] = useState('')
+    const [avisos, setAviso] = useState({campo: {}})
 
-    function salvarError(msg = {success: null, error: null}) {
-        if(msg.error != null) {
-            setErrors(msg.error)
+    function salvarAviso(msg: any, className: string, id: string) {
+        
+        if(typeof msg === 'object' && msg.campo != null) {
+            avisos.campo = {}
+            avisos.campo[msg.campo] = msg.mensagem
+        } else {
+            avisos[id] = {msg, className}
+            avisos.campo = undefined
         }
+
+        setAviso(avisos)
     }
 
     useEffect(() => {
         
-    })
+    }, [])
 
     return (
         <AppContext.Provider value={{
-            errors,
-            salvarError
+            avisos,
+            salvarAviso
         }}>
             {props.children}
         </AppContext.Provider>
