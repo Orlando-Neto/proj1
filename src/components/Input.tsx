@@ -3,7 +3,7 @@ export default function Input(props) {
     let label       = props.label
     let type        = props.type
     let id          = props.id
-    let required   = props?.required
+    let required    = props?.required
     let name        = props?.name
     let onchange    = props?.onchange
     let value       = props?.value

@@ -4,6 +4,7 @@ import prisma from '../../lib/prisma'
 import { useState } from 'react'
 import Input from '../../components/Input'
 import Usuario from '../../model/Usuario'
+import Select from '../../components/Select'
 
 export const getServerSideProps = async ({ req }) => {
 
@@ -26,8 +27,11 @@ export default function UsuariosPage({data}) {
   const [user, setUser] = useState<Usuario>({nome: "", email: "", senha: ''})
 
   const salvar = async (user, e) => {
+
     e.preventDefault()
     let response
+
+    if(user.senha == '') user.senha = undefined
 
     if(user.id == undefined) {
 
@@ -66,6 +70,7 @@ export default function UsuariosPage({data}) {
   }
 
   function editar(user) {
+    user.senha = '';
     setUser(user)
   }
 
@@ -112,6 +117,22 @@ export default function UsuariosPage({data}) {
                   placeholder="Digite seu email"
                 />
                 
+                <Select 
+                  label="Cargo"
+                  id="cargo"
+                  name="cargo"
+                  value={user.cargo}
+                  items = {[
+                    {0: 'Selecione uma opção'},
+                    {1: '2'},
+                    {2: '3'},
+                    {'Admin2': 'Administração 2'},
+                  ]
+                  }
+                  onchange={e => setUser({...user, cargo: e.target.value})}
+                  placeholder="Digite seu cargo"
+                />
+                
                 <Input 
                   type="password"
                   label="Senha"
@@ -119,7 +140,7 @@ export default function UsuariosPage({data}) {
                   name="senha"
                   value={user.senha}
                   onchange={e => setUser({...user, senha: e.target.value})}
-                  placeholder="Digite sua Senha"
+                  placeholder="Altere sua senha"
                 />
                 
             </div>
@@ -150,9 +171,9 @@ export default function UsuariosPage({data}) {
                     users.map((user, i) => (
                       <tr key={user.id} onClick={() => editar(user)}>
                         <td>{user.id}</td>
-                        <td>{user.name}</td>
+                        <td>{user.nome}</td>
                         <td>{user.email}</td>
-                        <td>{user.job}</td>
+                        <td>{user.cargo}</td>
                       </tr>
                     ))
                   }

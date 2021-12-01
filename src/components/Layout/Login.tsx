@@ -10,8 +10,6 @@ export default function Login() {
 
     const { errors } = useAppData()
 
-    console.log(errors)
-
     return (
         <div className="">
             <div className="page-wrapper">
