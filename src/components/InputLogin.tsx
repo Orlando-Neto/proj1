@@ -23,7 +23,7 @@ export default function InputLogin(props) {
                 value={value}
                 required={(required)??false} />
             {(avisos.campo != undefined && avisos.campo[id] != undefined) ? (
-                <span className={`alert alert-danger`}>{avisos.campo[id]}</span>
+                <p className={`small  text-red`}>{avisos.campo[id]}</p>
             ): (null)}
         </div>
     )

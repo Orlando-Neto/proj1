@@ -6,7 +6,11 @@ import Input from '../../components/Input'
 import Usuario from '../../model/Usuario'
 import Select from '../../components/Select'
 import useAuth from '../../data/hook/useAuthData'
+import Alerta from '../../components/Alerta'
+import useAppData from '../../data/hook/useAppData'
+import { useRouter } from 'next/router'
 
+//Buscar de inicio os usuários para a tabela
 export const getServerSideProps = async ({ req }) => {
 
   const data = await prisma.user.findMany({
@@ -15,24 +19,30 @@ export const getServerSideProps = async ({ req }) => {
     }
   })
 
-  let users = JSON.stringify(data);
-  users = JSON.parse(users)
-
-  return { props: { data: users } }
+  return { props: { data } }
 }
 
 // Display list of users (in /pages/index.tsx)
 export default function UsuariosPage({data}) {
 
+  //Pegando variáveis do Auth
   const { criptografar } = useAuth()
+  const userAuth = useAuth().user
+  const { salvarAviso } = useAppData()
+  //---
+  
+  //Declarando as variáveis de estado
   const [users, setUsers]     = useState(data)
-  const [user, setUser]       = useState<Usuario>({nome: "", email: "", senha: ''})
+  const [user, setUser]       = useState<Usuario>({nome: "", email: ""})
   const [btnDel, setBtnDel ]  = useState(true)
   const [inserir, setInsert]  = useState(true)
+  const router = useRouter()
+  //---
 
+  //Funções
   const resetarForm = () => {
     
-    setUser({nome: '', senha: '', email: ''})
+    setUser({nome: "", email: ""})
     setBtnDel(true)
     setInsert(true)
   }
@@ -42,7 +52,6 @@ export default function UsuariosPage({data}) {
     e.preventDefault()
     let response
 
-    
     if(user.id == undefined) {
       user.senha = criptografar(user.senha)
 
@@ -63,14 +72,18 @@ export default function UsuariosPage({data}) {
     if(!response.ok) {
       let ret = await response.json()
 
-      throw new Error(response.statusText)
+      salvarAviso(ret, 'danger', 'usuario')
+      router.push('/usuarios')
+      return;
     }
+    
     setBtnDel(true)
     setInsert(true)
 
     if(user.id == undefined) {
       let novoUser = await response.json()
       setUsers([...users, novoUser])
+      salvarAviso('Usuário inserido com sucesso!', 'success', 'usuario')
     } else {
 
       let novoUsers = users.map(u => {
@@ -78,12 +91,11 @@ export default function UsuariosPage({data}) {
       })
       
       setUsers(novoUsers)
+      salvarAviso('Usuário alterado com sucesso!', 'success', 'usuario')
     }
 
     e.target.reset()
-    setUser({nome: '', email: '', senha: ""})
-
-    return await response.json()
+    setUser({nome: '', email: ''})
   }
 
   const remUser = async (id) => {
@@ -111,29 +123,32 @@ export default function UsuariosPage({data}) {
   }
 
   function editar(user) {
+
     user.senha = '';
     setUser(user)
-    setBtnDel(false)
+
+    //Não deixar o usuário se apagar
+    if(userAuth.id != user.id) {
+      setBtnDel(false)
+    } else {
+      setBtnDel(true)
+    }
+
     setInsert(false)
   }
+  //---
 
   return (
     <>
       <Head />
 
       <Corpo>
-
+        <Alerta id="usuario" />
         <div className="card">
           <div className="card-header">
             Cadastro de Usuário
           </div>
-          <form onSubmit={async (e) => {
-              try { 
-                  await salvar(user, e);
-              } catch(err) {
-                
-              }
-            }} method="post" className="form-horizontal">
+          <form onSubmit={(e) => salvar(user, e)} method="post" className="form-horizontal">
             
             <div className="card-body card-block">
 
@@ -213,7 +228,7 @@ export default function UsuariosPage({data}) {
                 </thead>
                 <tbody>
                   {
-                    users.map((user, i) => (
+                    users.map((user) => (
                       <tr key={user.id} onClick={() => editar(user)}>
                         <td>{user.id}</td>
                         <td>{user.nome}</td>

@@ -5,9 +5,7 @@ export default function Alerta(props) {
     let id = props.id
     const { avisos } = useAppData()
 
-    console.log(avisos)
-
-    return (avisos[id] != undefined && avisos.campo != null) ? (
+    return (avisos[id] != undefined && avisos.campo == undefined) ? (
         <div className={`alert alert-${avisos[id].className}`}>{avisos[id].msg}</div>
     ): (null)
 }

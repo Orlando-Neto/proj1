@@ -6,6 +6,7 @@ export default function Select(props) {
     let name        = props?.name
     let value       = props?.value
     let onchange    = props?.onchange
+    let disabled    = props?.disabled
     let options     = (props.items)??['Não há opção']
 
     function renderOptions() {
@@ -38,7 +39,11 @@ export default function Select(props) {
                 <label htmlFor={id} className="form-control-label">{label}</label>
             </div>
             <div className="col-12 col-md-9">
-                <select name={name} id={id} required={(required)??false} onChange={onchange} className="form-control">
+                <select name={name} id={id} 
+                    required={(required)??false} 
+                    onChange={onchange} 
+                    disabled={disabled}
+                    className="form-control">
                     {renderOptions()}
                 </select>
             </div>

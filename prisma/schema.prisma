@@ -12,10 +12,10 @@ generator client {
 
 model User {
   id            Int       @default(autoincrement()) @id
-  nome          String?
+  nome          String    @db.VarChar(100)
   email         String?   @unique
   senha         String?   @db.VarChar(100)
-  cargo         String?   @db.VarChar(100)
+  cargo         String    @db.VarChar(100)
 
   @@map(name: "users")
 }

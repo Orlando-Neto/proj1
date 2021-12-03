@@ -20,11 +20,14 @@ export default async function handler(req, res) {
                 data: userData,
             }).catch((e) => {
                 status = 422
+                
                 let mensagem = buscarErro(e.code, (e.meta.target.length == 1)?e.meta.target[0]:null)
-                return {'mensagem': mensagem, 'campos': e.meta.target}
+                return res.status(status).json({'mensagem': mensagem, 'campo': e.meta.target[0]})
             })
     
-            res.status(status).json(updatedUser)
+            if(updatedUser) {
+                return res.status(status).json(updatedUser)
+            }
         }
     }
 
@@ -40,10 +43,12 @@ export default async function handler(req, res) {
             }).catch((e) => {
                 status = 422
                 let mensagem = buscarErro(e.code, (e.meta.target.length == 1)?e.meta.target[0]:null)
-                return {'mensagem': mensagem, 'campos': e.meta.target}
+                return res.status(status).json({'mensagem': mensagem, 'campos': e.meta.target})
             })
 
-            res.status(status).json(deleteUser)
+            if(deleteUser) {
+                return res.status(status).json(deleteUser)
+            }
         }
     }
 

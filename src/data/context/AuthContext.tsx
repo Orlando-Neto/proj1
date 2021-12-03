@@ -39,9 +39,12 @@ export function AuthProvider(props) {
 
     function criptografar(palavra) {
 
+        if(!palavra) return ''
+
         let sha1 = crypto.createHash('sha1')
         sha1.update(palavra)
         return sha1.digest('hex')
+        
     }
 
     async function login(e, form) {
@@ -62,6 +65,7 @@ export function AuthProvider(props) {
             localStorage.setItem('usuario', JSON.stringify({
                 nome: user.nome,
                 email: user.email,
+                cargo: user.cargo,
                 id: user.id
             }))
 
@@ -106,6 +110,7 @@ export function AuthProvider(props) {
             body: JSON.stringify({
                 nome: form.nome,
                 email: form.email,
+                cargo: 'normal',
                 senha: criptografar(form.senha),
                 senha2: criptografar(form.senha2)
             })
@@ -118,6 +123,7 @@ export function AuthProvider(props) {
             localStorage.setItem('usuario', JSON.stringify({
                 nome: user.nome,
                 email: user.email,
+                cargo: user.cargo,
                 id: user.id
             }))
 
