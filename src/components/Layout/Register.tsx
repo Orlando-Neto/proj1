@@ -1,10 +1,10 @@
 import Scripts from "./Scripts"
 import Link from 'next/link'
 import InputLogin from "../InputLogin"
-import Button from '../Botao'
+import Button from '../Button'
 import useAuth from "../../data/hook/useAuthData"
 import { useState } from "react"
-import Alerta from "../Alerta"
+import Alerta from "../Alert"
 
 interface formProps {
     nome: string

@@ -3,6 +3,7 @@ import { createContext, useEffect, useState } from "react";
 interface AppContextProps {
     avisos?: {campo: {}},
     salvarAviso?: (msg: any, className: string, id: string) => void
+    resetaAviso?: () => void
 }
 
 export function AppProvider(props) {
@@ -22,6 +23,10 @@ export function AppProvider(props) {
         setAviso(avisos)
     }
 
+    function resetaAviso() {
+        setAviso({campo: {}})
+    }
+
     useEffect(() => {
         
     }, [])
@@ -29,7 +34,8 @@ export function AppProvider(props) {
     return (
         <AppContext.Provider value={{
             avisos,
-            salvarAviso
+            salvarAviso,
+            resetaAviso
         }}>
             {props.children}
         </AppContext.Provider>

@@ -6,7 +6,7 @@ import Input from '../../components/Input'
 import Usuario from '../../model/Usuario'
 import Select from '../../components/Select'
 import useAuth from '../../data/hook/useAuthData'
-import Alerta from '../../components/Alerta'
+import Alerta from '../../components/Alert'
 import useAppData from '../../data/hook/useAppData'
 import { useRouter } from 'next/router'
 
@@ -233,7 +233,7 @@ export default function UsuariosPage({data}) {
                         <td>{user.id}</td>
                         <td>{user.nome}</td>
                         <td>{user.email}</td>
-                        <td>{user.cargo}</td>
+                        <td>{(user.cargo=='admin')?'Administrador':'Normal'}</td>
                       </tr>
                     ))
                   }

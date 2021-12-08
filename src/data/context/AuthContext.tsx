@@ -21,7 +21,7 @@ export default AuthContext
 export function AuthProvider(props) {
 
     const router = useRouter()
-    const { salvarAviso } = useAppData()
+    const { salvarAviso, resetaAviso } = useAppData()
 
     const [user, setUser] = useState(null)
     
@@ -44,7 +44,6 @@ export function AuthProvider(props) {
         let sha1 = crypto.createHash('sha1')
         sha1.update(palavra)
         return sha1.digest('hex')
-        
     }
 
     async function login(e, form) {
@@ -62,6 +61,7 @@ export function AuthProvider(props) {
             gerenciarCookie(true)
             const user = await res.json()
             setUser(user)
+            resetaAviso()
             localStorage.setItem('usuario', JSON.stringify({
                 nome: user.nome,
                 email: user.email,

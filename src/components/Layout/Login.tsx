@@ -3,8 +3,8 @@ import useAuth from "../../data/hook/useAuthData";
 import Scripts from "./Scripts";
 import Link from 'next/link'
 import InputLogin from "../InputLogin";
-import Button from '../Botao'
-import Alerta from "../Alerta";
+import Button from '../Button'
+import Alerta from "../Alert";
 
 export default function Login() {
     
@@ -30,6 +30,7 @@ export default function Login() {
                                             label="Email"
                                             name="email"
                                             type="email"
+                                            required
                                             placeholder="Digite seu email"
                                             onchange={(e) => setForm({...form, email: e.target.value})}
                                         />
@@ -38,6 +39,7 @@ export default function Login() {
                                             label="Senha"
                                             name="senha"
                                             type="password"
+                                            required
                                             placeholder="Digite sua senha"
                                             onchange={(e) => setForm({...form, senha: e.target.value})}
                                         />
