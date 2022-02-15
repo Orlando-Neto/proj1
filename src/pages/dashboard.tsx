@@ -10,19 +10,7 @@ export default function DashBoardPage() {
             <Head />
 
             <Corpo>
-                <Table
-                    className="table table-borderless table-striped table-earning"
-                    thead={[
-                        [
-                            {text: 'Olá'},
-                            {text: 'tchau'}
-                        ],
-                        [
-                            {text: 'olá 2', colspan: 2}
-                        ]
-                    ]}
-                >
-                </Table>
+                
             </Corpo>
         </>
     )

@@ -9,6 +9,7 @@ import useAuth from '../../data/hook/useAuthData'
 import Alerta from '../../components/Alert'
 import useAppData from '../../data/hook/useAppData'
 import { useRouter } from 'next/router'
+import Table from '../../components/Table'
 
 //Buscar de inicio os usuários para a tabela
 export const getServerSideProps = async ({ req }) => {
@@ -217,28 +218,30 @@ export default function UsuariosPage({data}) {
         </div>
 
         <div className="table-responsive table--no-card m-b-30">
-            <table className="table table-borderless table-striped table-earning">
-                <thead>
-                    <tr>
-                      <th>ID</th>
-                      <th>Nome</th>
-                      <th>Email</th>
-                      <th>Cargo</th>
+            <Table
+              className='table table-borderless table-striped table-earning'
+              thead={[
+                [
+                  {text: "ID"},
+                  {text: "Nome"},
+                  {text: "Email"},
+                  {text: "Cargo"}
+                ]
+              ]}
+            >
+              <tbody>
+                {
+                  users.map((user) => (
+                    <tr key={user.id} onClick={() => editar(user)}>
+                      <td>{user.id}</td>
+                      <td>{user.nome}</td>
+                      <td>{user.email}</td>
+                      <td>{(user.cargo=='admin')?'Administrador':'Normal'}</td>
                     </tr>
-                </thead>
-                <tbody>
-                  {
-                    users.map((user) => (
-                      <tr key={user.id} onClick={() => editar(user)}>
-                        <td>{user.id}</td>
-                        <td>{user.nome}</td>
-                        <td>{user.email}</td>
-                        <td>{(user.cargo=='admin')?'Administrador':'Normal'}</td>
-                      </tr>
-                    ))
-                  }
-                </tbody>
-            </table>
+                  ))
+                }
+              </tbody>
+            </Table>
         </div>
       </Corpo>
     </>
