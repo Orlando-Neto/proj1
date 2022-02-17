@@ -20,6 +20,23 @@ export const getServerSideProps = async ({ req }) => {
     }
   })
 
+  function adicionaZero(numero) {
+
+    if(numero <= 9) 
+        return "0"+numero;
+    else
+        return numero;
+  }
+
+  data.map((v, i) => {
+    let dt_nasc = new Date(v.dt_nascimento)
+
+    let dia = adicionaZero(dt_nasc.getDate()+1)
+    let mes = adicionaZero(dt_nasc.getMonth()+1)
+
+    data[i].dt_nascimento = dt_nasc.getFullYear()+'-'+mes+'-'+dia
+  })
+
   return { props: { data } }
 }
 
@@ -29,7 +46,7 @@ export default function UsuariosPage({data}) {
   //Pegando variáveis do Auth
   const { criptografar } = useAuth()
   const userAuth = useAuth().user
-  const { salvarAviso } = useAppData()
+  const { salvarAviso, mostraData } = useAppData()
   //---
   
   //Declarando as variáveis de estado
@@ -101,7 +118,6 @@ export default function UsuariosPage({data}) {
 
   const remUser = async (id) => {
 
-
     let response = await fetch('/api/users/'+id, {
       method: "DELETE"
     })
@@ -112,7 +128,6 @@ export default function UsuariosPage({data}) {
       throw new Error(response.statusText)
     }
     setBtnDel(true)
-
     //Remove o usuário apagado do filtro
     const newUsers = users.filter(u => {
       if(u.id !== id) {
@@ -121,6 +136,7 @@ export default function UsuariosPage({data}) {
     })
 
     setUsers(newUsers)
+    resetarForm()
   }
 
   function editar(user) {
@@ -200,6 +216,14 @@ export default function UsuariosPage({data}) {
                   placeholder={(inserir)?'Insira sua senha':'Altere sua senha'}
                 />
                 
+                <Input 
+                  type="date"
+                  label="Data Nascimento"
+                  id="dt_nascimento"
+                  name="dt_nascimento"
+                  value={user.dt_nascimento}
+                  onchange={e => setUser({...user, dt_nascimento: e.target.value})}
+                />
             </div>
             <div className="card-footer">
               <button type="submit" className="btn btn-primary btn-sm">
@@ -219,13 +243,13 @@ export default function UsuariosPage({data}) {
 
         <div className="table-responsive table--no-card m-b-30">
             <Table
-              className='table table-borderless table-striped table-earning'
               thead={[
                 [
                   {text: "ID"},
                   {text: "Nome"},
                   {text: "Email"},
-                  {text: "Cargo"}
+                  {text: "Cargo"},
+                  {text: "Data Nascimento"}
                 ]
               ]}
             >
@@ -237,6 +261,7 @@ export default function UsuariosPage({data}) {
                       <td>{user.nome}</td>
                       <td>{user.email}</td>
                       <td>{(user.cargo=='admin')?'Administrador':'Normal'}</td>
+                      <td>{mostraData(user.dt_nascimento)}</td>
                     </tr>
                   ))
                 }

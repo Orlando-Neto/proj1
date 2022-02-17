@@ -20,6 +20,7 @@ export default async function handler(req, res) {
     const savedUser = await prisma.user.create({
         data: userData
     }).catch((e) => {
+        console.log(e)
         let mensagem = buscarErro(e.code, (e.meta.target.length == 1)?e.meta.target[0]:null)
         
         status = 422

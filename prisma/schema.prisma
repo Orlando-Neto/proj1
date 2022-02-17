@@ -16,6 +16,7 @@ model User {
   email         String?   @unique
   senha         String?   @db.VarChar(100)
   cargo         String    @db.VarChar(100)
+  dt_nascimento DateTime? @db.Date
 
   @@map(name: "users")
 }

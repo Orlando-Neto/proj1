@@ -11,6 +11,8 @@ export default async function handler(req, res) {
 
         if(+req.query.id > 0) {
             const userData = JSON.parse(req.body)
+
+            userData.dt_nascimento = new Date(userData.dt_nascimento)
             
             let status = 200
             const updatedUser = await prisma.user.update({

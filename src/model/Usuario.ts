@@ -4,4 +4,5 @@ export default interface Usuario {
     email: string
     senha?: string
     cargo?: string
+    dt_nascimento?: Date|string
 }

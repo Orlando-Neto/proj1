@@ -25,7 +25,7 @@ export default function Input(props) {
             </div>
             <div className="col-12 col-md-9">
                 <input type={type} id={id} name={name} required={(required)??false}
-                    onChange={onchange} value={value} placeholder={placeholder} 
+                    onChange={onchange} value={(value)??''} placeholder={placeholder} 
                     className={className} />
                 {(avisos.campo != undefined && avisos.campo[id] != undefined) ? (
                     <p className={`small text-red`}>{avisos.campo[id]}</p>

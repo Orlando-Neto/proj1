@@ -4,6 +4,7 @@ interface AppContextProps {
     avisos?: {campo: {}},
     salvarAviso?: (msg: any, className: string, id: string) => void
     resetaAviso?: () => void
+    mostraData?: (data) => string
 }
 
 export function AppProvider(props) {
@@ -27,6 +28,17 @@ export function AppProvider(props) {
         setAviso({campo: {}})
     }
 
+    function mostraData(data: string) {
+        if(data) {
+
+            let tmp = data.split('-')
+    
+            return tmp[2]+'/'+tmp[1]+'/'+tmp[0]
+        } else {
+            return data
+        }
+    }
+
     useEffect(() => {
         
     }, [])
@@ -35,7 +47,8 @@ export function AppProvider(props) {
         <AppContext.Provider value={{
             avisos,
             salvarAviso,
-            resetaAviso
+            resetaAviso,
+            mostraData
         }}>
             {props.children}
         </AppContext.Provider>

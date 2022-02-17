@@ -21,7 +21,7 @@ export default function Table(props: tableProps) {
     let thead = props?.thead
     let tbody = props?.tbody
     let tfoot = props?.tfoot
-    let className = props?.className
+    let className = props?.className ?? 'table table-borderless table-striped table-earning'
 
     function renderTHead() {
 
