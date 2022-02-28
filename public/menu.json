@@ -12,5 +12,12 @@
         "link": "/usuarios",
         "icon": "fas fa-user",
         "perm": "admin"
+    },
+    {
+        "id": 3,
+        "text": "Produtos",
+        "link": "/produtos",
+        "icon": "fas fa-box",
+        "perm": "admin"
     }
 ]

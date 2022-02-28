@@ -245,7 +245,6 @@ export default function UsuariosPage({data}) {
             <Table
               thead={[
                 [
-                  {text: "ID"},
                   {text: "Nome"},
                   {text: "Email"},
                   {text: "Cargo"},
@@ -257,7 +256,6 @@ export default function UsuariosPage({data}) {
                 {
                   users.map((user) => (
                     <tr key={user.id} onClick={() => editar(user)}>
-                      <td>{user.id}</td>
                       <td>{user.nome}</td>
                       <td>{user.email}</td>
                       <td>{(user.cargo=='admin')?'Administrador':'Normal'}</td>
